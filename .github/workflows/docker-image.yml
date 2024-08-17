@@ -27,11 +27,11 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: swsand/movie-nodeapp-backend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/movie-nodeapp-backend:latest
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v2
         with:
           context: ./frontend
           push: true
-          tags: swsand/movie-nodeapp-frontend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/movie-nodeapp-frontend:latest
