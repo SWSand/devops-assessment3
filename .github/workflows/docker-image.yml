@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-push-backend:
-    if: ${{ contains(github.event.commits.*.added, 'backend/**') || contains(github.event.commits.*.modified, 'backend/**') || contains(github.event.commits.*.renamed, 'backend/**') || contains(github.event.commits.*.removed, 'backend/**') }}
+    if: contains(github.event.head_commit.message, '[backend]') || github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -33,7 +33,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/movie-nodeapp-backend:latest
 
   build-push-frontend:
-    if: ${{ contains(github.event.commits.*.added, 'frontend/**') || contains(github.event.commits.*.modified, 'frontend/**') || contains(github.event.commits.*.renamed, 'frontend/**') || contains(github.event.commits.*.removed, 'frontend/**') }}
+    if: contains(github.event.head_commit.message, '[frontend]') || github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
