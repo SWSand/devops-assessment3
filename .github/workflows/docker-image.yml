@@ -4,9 +4,14 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+
 
 jobs:
   build-backend:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -26,11 +31,10 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: your-dockerhub-username/movie-nodeapp-frontend:latest
-    # Only run this job if files in the backend directory have changed
-    if: contains( github.event.head_commit.message, 'backend/') || contains( github.event.head_commit.message, 'frontend/' )
+          tags: ${{ secrets.DOCKER_USERNAME }}/movie-nodeapp-backend:latest
 
   build-frontend:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -50,6 +54,4 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: your-dockerhub-username/movie-nodeapp-frontend:latest
-    # Only run this job if files in the frontend directory have changed
-    if: contains( github.event.head_commit.message, 'frontend/') || contains( github.event.head_commit.message, 'backend/' )
+          tags: ${{ secrets.DOCKER_USERNAME }}/movie-nodeapp-frontend:latest
