@@ -23,4 +23,3 @@ app.get("/data", function (req, res) {
 app.listen(port, () =>
   console.log(`Backend rest api listening on port ${port}!`)
 );
-
